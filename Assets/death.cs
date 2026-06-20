@@ -70,8 +70,10 @@ public class death : MonoBehaviour
         if (_deathBackground != null)
             _deathBackground.SetActive(true);
 
-        RespawnCharacter(_character1);
-        RespawnCharacter(_character2);
+        // Karakter 1'i merkezden 0.5 birim sola (-0.5f), Karakter 2'yi 0.5 birim sağa (0.5f) ışınlıyoruz.
+        // Böylece aralarında tam 1 birim fark oluyor ve Respawn noktası tam ortalarında kalıyor.
+        RespawnCharacter(_character1, -1.5f);
+        RespawnCharacter(_character2, 1.5f);
 
         // Belirlenen süre kadar bekle
         yield return new WaitForSeconds(_messageDuration);
@@ -86,11 +88,13 @@ public class death : MonoBehaviour
         _isRespawning = false;
     }
 
-    private void RespawnCharacter(GameObject character)
+    // Fonksiyona xOffset (X ekseni kaydırması) parametresi ekledik
+    private void RespawnCharacter(GameObject character, float xOffset)
     {
         if (character == null || _respawnPoint == null) return;
 
-        character.transform.position = _respawnPoint.position + _characterOffset;
+        // Normal pozisyona ekstra olarak X eksenindeki farkı ekliyoruz
+        character.transform.position = _respawnPoint.position + _characterOffset + new Vector3(xOffset, 0f, 0f);
 
         Rigidbody2D rb = character.GetComponent<Rigidbody2D>();
         if (rb != null)
