@@ -46,12 +46,5 @@ public class PlayerController : MonoBehaviour
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         }
-
-        // 4. İp Görselini Güncelleme
-        if (lineRenderer != null && otherPlayer != null)
-        {
-            lineRenderer.SetPosition(0, transform.position);
-            lineRenderer.SetPosition(1, otherPlayer.position);
         }
     }
-}
